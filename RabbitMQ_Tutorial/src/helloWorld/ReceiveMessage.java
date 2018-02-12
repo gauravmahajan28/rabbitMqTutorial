@@ -25,6 +25,7 @@ public class ReceiveMessage {
         System.out.println(" [x] Received '" + message + "'");
       }
     };
-    channel.basicConsume(QUEUE_NAME, true, consumer);
+    boolean autoAck = true;
+    channel.basicConsume(QUEUE_NAME, autoAck, consumer);
   }
 }
