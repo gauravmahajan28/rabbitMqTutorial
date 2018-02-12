@@ -1,0 +1,36 @@
+package workqueue;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.MessageProperties;
+
+public class SendMessage {
+	
+	private final static String QUEUE_NAME = "task_queue";
+
+	public static void main(String[] args) throws Exception 
+	{
+		// TODO Auto-generated method stub
+
+		
+		
+		
+		ConnectionFactory factory = new ConnectionFactory();
+	    factory.setHost("localhost");
+	    Connection connection = factory.newConnection();
+	    Channel channel = connection.createChannel();
+	    boolean durable = true;
+
+	   
+	    channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
+	    String message = "Hello World!";
+	    channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes("UTF-8"));
+	    System.out.println(" [x] Sent '" + message + "'");
+
+	    channel.close();
+	    connection.close();
+		
+		
+	}
+
+}
